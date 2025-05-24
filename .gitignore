@@ -1,5 +1,5 @@
-!**/src/main/**/target/
-!**/src/test/**/target/
+**/target/
+**/target/*
 
 ### IntelliJ IDEA ###
 .idea
