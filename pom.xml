@@ -34,6 +34,7 @@
         <jaxb-api>2.3.1</jaxb-api>
         <poi>5.4.0</poi>
         <mysql>8.0.33</mysql>
+        <spring-security>6.4.5</spring-security>
     </properties>
     <dependencies>
     </dependencies>

@@ -9,6 +9,7 @@ import com.sky.exception.AccountNotFoundException;
 import com.sky.exception.PasswordErrorException;
 import com.sky.mapper.EmployeeMapper;
 import com.sky.service.EmployeeService;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.Objects;
@@ -17,10 +18,12 @@ import java.util.Objects;
 public class EmployeeServiceImpl implements EmployeeService {
 
     private final EmployeeMapper employeeMapper;
+    private final BCryptPasswordEncoder passwordEncoder;
 
 
-    public EmployeeServiceImpl(EmployeeMapper employeeMapper) {
+    public EmployeeServiceImpl(EmployeeMapper employeeMapper, BCryptPasswordEncoder passwordEncoder) {
         this.employeeMapper = employeeMapper;
+        this.passwordEncoder = passwordEncoder;
     }
 
     public Employee login(EmployeeLoginDTO employeeLoginDTO) {
@@ -32,19 +35,16 @@ public class EmployeeServiceImpl implements EmployeeService {
 
         //2、处理各种异常情况（用户名不存在、密码不对、账号被锁定）
         if (employee == null) {
-            //账号不存在
             throw new AccountNotFoundException(MessageConstant.ACCOUNT_NOT_FOUND);
         }
 
         //密码比对
-        // TODO 后期需要进行md5加密，然后再进行比对
-        if (!password.equals(employee.getPassword())) {
-            //密码错误
+        String storedPassword = employee.getPassword();
+        if (!passwordEncoder.matches(password, storedPassword)) {
             throw new PasswordErrorException(MessageConstant.PASSWORD_ERROR);
         }
 
         if (Objects.equals(employee.getStatus(), StatusConstant.DISABLE)) {
-            //账号被锁定
             throw new AccountLockedException(MessageConstant.ACCOUNT_LOCKED);
         }
 
