@@ -4,6 +4,7 @@ import com.sky.constant.JwtClaimsConstant;
 import com.sky.dto.EmployeeDTO;
 import com.sky.dto.EmployeeLoginDTO;
 import com.sky.dto.EmployeePageQueryDTO;
+import com.sky.dto.PasswordEditDTO;
 import com.sky.entity.Employee;
 import com.sky.properties.JwtProperties;
 import com.sky.result.PageResult;
@@ -87,6 +88,12 @@ public class EmployeeController {
     @PutMapping
     public Result<String> update(@RequestBody EmployeeDTO employeeDTO) {
         employeeService.update(employeeDTO);
+        return Result.success();
+    }
+
+    @PutMapping("/editPassword")
+    public Result<String> editPassword(@RequestBody PasswordEditDTO passwordEditDTO) {
+        employeeService.editPassword(passwordEditDTO);
         return Result.success();
     }
 }
