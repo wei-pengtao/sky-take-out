@@ -5,7 +5,6 @@ import com.github.pagehelper.PageHelper;
 import com.sky.constant.MessageConstant;
 import com.sky.constant.PasswordConstant;
 import com.sky.constant.StatusConstant;
-import com.sky.context.BaseContext;
 import com.sky.dto.EmployeeDTO;
 import com.sky.dto.EmployeeLoginDTO;
 import com.sky.dto.EmployeePageQueryDTO;
@@ -21,7 +20,6 @@ import org.springframework.beans.BeanUtils;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
-import java.time.LocalDateTime;
 import java.util.Objects;
 
 @Service
@@ -69,10 +67,6 @@ public class EmployeeServiceImpl implements EmployeeService {
 
         employee.setStatus(StatusConstant.ENABLE);
         employee.setPassword(passwordEncoder.encode(PasswordConstant.DEFAULT_PASSWORD));
-        employee.setCreateTime(LocalDateTime.now());
-        employee.setUpdateTime(LocalDateTime.now());
-        employee.setCreateUser(BaseContext.getCurrentId());
-        employee.setUpdateUser(BaseContext.getCurrentId());
 
         employeeMapper.insert(employee);
     }
@@ -88,12 +82,7 @@ public class EmployeeServiceImpl implements EmployeeService {
 
     @Override
     public void startOrStop(Long id, Integer status) {
-        Employee employee = Employee.builder()
-                .status(status)
-                .id(id)
-                .updateTime(LocalDateTime.now())
-                .updateUser(BaseContext.getCurrentId())
-                .build();
+        Employee employee = Employee.builder().status(status).id(id).build();
         employeeMapper.update(employee);
     }
 
@@ -106,9 +95,6 @@ public class EmployeeServiceImpl implements EmployeeService {
     public void update(EmployeeDTO employeeDTO) {
         Employee employee = new Employee();
         BeanUtils.copyProperties(employeeDTO, employee);
-
-        employee.setUpdateTime(LocalDateTime.now());
-        employee.setUpdateUser(BaseContext.getCurrentId());
         employeeMapper.update(employee);
     }
 
@@ -124,8 +110,6 @@ public class EmployeeServiceImpl implements EmployeeService {
         }
 
         employee.setPassword(passwordEncoder.encode(passwordEditDTO.getNewPassword()));
-        employee.setUpdateTime(LocalDateTime.now());
-        employee.setUpdateUser(BaseContext.getCurrentId());
         employeeMapper.update(employee);
     }
 
