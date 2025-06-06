@@ -49,4 +49,10 @@ public class DishController {
         DishVO dishVO = dishService.getById(id);
         return Result.success(dishVO);
     }
+
+    @PutMapping
+    public Result<String> update(@RequestBody DishDTO dishDTO) {
+        dishService.updateWithFlavor(dishDTO);
+        return Result.success();
+    }
 }
