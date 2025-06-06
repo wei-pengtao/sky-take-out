@@ -5,6 +5,7 @@ import com.sky.dto.DishPageQueryDTO;
 import com.sky.result.PageResult;
 import com.sky.result.Result;
 import com.sky.service.DishService;
+import com.sky.vo.DishVO;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -41,5 +42,11 @@ public class DishController {
     public Result<String> startOrStop(@PathVariable Integer status, Long id) {
         dishService.startOrStop(status, id);
         return Result.success();
+    }
+
+    @GetMapping("/{id}")
+    public Result<DishVO> getById(@PathVariable Long id) {
+        DishVO dishVO = dishService.getById(id);
+        return Result.success(dishVO);
     }
 }
