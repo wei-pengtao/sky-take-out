@@ -36,4 +36,10 @@ public class DishController {
         dishService.deleteBatch(ids);
         return Result.success();
     }
+
+    @PostMapping("/status/{status}")
+    public Result<String> startOrStop(@PathVariable Integer status, Long id) {
+        dishService.startOrStop(status, id);
+        return Result.success();
+    }
 }
