@@ -13,6 +13,7 @@ import com.sky.mapper.DishMapper;
 import com.sky.mapper.SetmealMapper;
 import com.sky.result.PageResult;
 import com.sky.service.CategoryService;
+import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.BeanUtils;
 import org.springframework.stereotype.Service;
@@ -24,17 +25,12 @@ import java.util.List;
  */
 @Service
 @Slf4j
+@RequiredArgsConstructor
 public class CategoryServiceImpl implements CategoryService {
 
     private final CategoryMapper categoryMapper;
     private final DishMapper dishMapper;
     private final SetmealMapper setmealMapper;
-
-    public CategoryServiceImpl(CategoryMapper categoryMapper, DishMapper dishMapper, SetmealMapper setmealMapper) {
-        this.categoryMapper = categoryMapper;
-        this.dishMapper = dishMapper;
-        this.setmealMapper = setmealMapper;
-    }
 
     public void save(CategoryDTO categoryDTO) {
         Category category = new Category();

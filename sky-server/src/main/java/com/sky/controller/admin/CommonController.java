@@ -2,6 +2,7 @@ package com.sky.controller.admin;
 
 import com.sky.result.Result;
 import com.sky.utils.MinioOssUtil;
+import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -13,13 +14,10 @@ import java.util.UUID;
 
 @RestController
 @RequestMapping("/admin/common")
+@RequiredArgsConstructor
 public class CommonController {
 
     private final MinioOssUtil minioOssUtil;
-
-    public CommonController(MinioOssUtil minioOssUtil) {
-        this.minioOssUtil = minioOssUtil;
-    }
 
     @PostMapping("/upload")
     public Result<String> upload(MultipartFile file) throws Exception {

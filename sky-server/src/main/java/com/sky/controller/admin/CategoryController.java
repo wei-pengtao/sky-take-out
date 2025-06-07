@@ -6,7 +6,7 @@ import com.sky.entity.Category;
 import com.sky.result.PageResult;
 import com.sky.result.Result;
 import com.sky.service.CategoryService;
-import io.swagger.annotations.Api;
+import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.*;
 
@@ -14,15 +14,11 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/admin/category")
-@Api(tags = "分类相关接口")
+@RequiredArgsConstructor
 @Slf4j
 public class CategoryController {
 
     private final CategoryService categoryService;
-
-    public CategoryController(CategoryService categoryService) {
-        this.categoryService = categoryService;
-    }
 
     @PostMapping
     public Result<String> save(@RequestBody CategoryDTO categoryDTO) {

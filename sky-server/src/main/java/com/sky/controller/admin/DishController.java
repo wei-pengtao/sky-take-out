@@ -6,19 +6,17 @@ import com.sky.result.PageResult;
 import com.sky.result.Result;
 import com.sky.service.DishService;
 import com.sky.vo.DishVO;
+import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
 @RestController
 @RequestMapping("admin/dish")
+@RequiredArgsConstructor
 public class DishController {
 
     private final DishService dishService;
-
-    public DishController(DishService dishService) {
-        this.dishService = dishService;
-    }
 
     @PostMapping
     public Result<String> save(@RequestBody DishDTO dishDTO) {
