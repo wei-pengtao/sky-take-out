@@ -10,7 +10,7 @@ import com.sky.entity.Category;
 import com.sky.exception.DeletionNotAllowedException;
 import com.sky.mapper.CategoryMapper;
 import com.sky.mapper.DishMapper;
-import com.sky.mapper.SetmealMapper;
+import com.sky.mapper.SetMealMapper;
 import com.sky.result.PageResult;
 import com.sky.service.CategoryService;
 import lombok.RequiredArgsConstructor;
@@ -30,7 +30,7 @@ public class CategoryServiceImpl implements CategoryService {
 
     private final CategoryMapper categoryMapper;
     private final DishMapper dishMapper;
-    private final SetmealMapper setmealMapper;
+    private final SetMealMapper setMealMapper;
 
     public void save(CategoryDTO categoryDTO) {
         Category category = new Category();
@@ -59,7 +59,7 @@ public class CategoryServiceImpl implements CategoryService {
         }
 
         //查询当前分类是否关联了套餐，如果关联了就抛出业务异常
-        count = setmealMapper.countByCategoryId(id);
+        count = setMealMapper.countByCategoryId(id);
         if(count > 0){
             //当前分类下有菜品，不能删除
             throw new DeletionNotAllowedException(MessageConstant.CATEGORY_BE_RELATED_BY_SETMEAL);
