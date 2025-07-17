@@ -29,4 +29,6 @@ public interface DishMapper {
 
     @AutoFill(operationType = OperationType.UPDATE)
     void update(Dish dish);
+
+    List<Dish> list(Dish dish);
 }
