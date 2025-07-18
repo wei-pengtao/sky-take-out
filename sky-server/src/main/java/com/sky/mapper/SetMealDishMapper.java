@@ -10,4 +10,6 @@ public interface SetMealDishMapper {
     List<Long> getDishIdsByDishIds(List<Long> dishIds);
 
     void insertBatch(List<SetMealDish> setMealDishes);
+
+    void deleteBySetMealIds(List<Long> setMealIds);
 }

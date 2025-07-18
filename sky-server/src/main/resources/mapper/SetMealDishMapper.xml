@@ -16,4 +16,11 @@
             #{setMealDish.copies})
         </foreach>
     </insert>
+    <delete id="deleteBySetMealIds">
+        delete from setmeal_dish
+        where setmeal_id in
+        <foreach collection="setMealIds" item="setMealId" open="(" separator="," close=")">
+            #{setMealId}
+        </foreach>
+    </delete>
 </mapper>
