@@ -5,6 +5,7 @@ import com.sky.dto.SetmealPageQueryDTO;
 import com.sky.result.PageResult;
 import com.sky.result.Result;
 import com.sky.service.SetmealService;
+import com.sky.vo.SetmealVO;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.*;
@@ -35,5 +36,11 @@ public class SetmealController {
     public Result<?> delete(@RequestParam List<Long> ids) {
         setmealService.deleteBatch(ids);
         return  Result.success();
+    }
+
+    @GetMapping("{id}")
+    public Result<SetmealVO> getById(@PathVariable Long id) {
+        SetmealVO setmealVO = setmealService.getById(id);
+        return Result.success(setmealVO);
     }
 }
