@@ -35,9 +35,7 @@ public class SetmealServiceImpl implements SetmealService {
         setmealMapper.insert(setmeal);
 
         Long setmealId = setmeal.getId();
-        setmealDTO.getSetmealDishes().forEach(setmealDish -> {
-            setmealDish.setSetmealId(setmealId);
-        });
+        setmealDTO.getSetmealDishes().forEach(setmealDish -> setmealDish.setSetmealId(setmealId));
         
         setmealDishMapper.insertBatch(setmealDTO.getSetmealDishes());
     }
@@ -76,5 +74,19 @@ public class SetmealServiceImpl implements SetmealService {
         setmealVO.setSetmealDishes(setmealDishes);
 
         return setmealVO;
+    }
+
+    @Override
+    public void update(SetmealDTO setmealDTO) {
+        Setmeal setmeal = new Setmeal();
+        BeanUtils.copyProperties(setmealDTO, setmeal);
+
+        setmealMapper.update(setmeal);
+        setmealDishMapper.deleteBySetmealIds(List.of(setmeal.getId()));
+
+        List<SetmealDish> setmealDishes = setmealDTO.getSetmealDishes();
+        setmealDishes.forEach(setmealDish -> setmealDish.setSetmealId(setmeal.getId()));
+
+        setmealDishMapper.insertBatch(setmealDishes);
     }
 }

@@ -26,4 +26,7 @@ public interface SetmealMapper {
     Setmeal getById(Long id);
 
     void deleteByIds(List<Long> ids);
+
+    @AutoFill(operationType = OperationType.UPDATE)
+    void update(Setmeal setmeal);
 }
