@@ -1,10 +1,10 @@
 package com.sky.controller.admin;
 
-import com.sky.dto.SetMealDTO;
-import com.sky.dto.SetMealPageQueryDTO;
+import com.sky.dto.SetmealDTO;
+import com.sky.dto.SetmealPageQueryDTO;
 import com.sky.result.PageResult;
 import com.sky.result.Result;
-import com.sky.service.SetMealService;
+import com.sky.service.SetmealService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.*;
@@ -15,25 +15,25 @@ import java.util.List;
 @RequestMapping("/admin/setmeal")
 @Slf4j
 @RequiredArgsConstructor
-public class SetMealController {
+public class SetmealController {
 
-    private final SetMealService setMealService;
+    private final SetmealService setmealService;
 
     @PostMapping
-    public Result<String> save(@RequestBody SetMealDTO setMealDTO) {
-        setMealService.saveWithDish(setMealDTO);
+    public Result<String> save(@RequestBody SetmealDTO setmealDTO) {
+        setmealService.saveWithDish(setmealDTO);
         return Result.success();
     }
 
     @GetMapping("/page")
-    public Result<?> page(SetMealPageQueryDTO setMealPageQueryDTO) {
-        PageResult pageResult = setMealService.pageQuery(setMealPageQueryDTO);
+    public Result<?> page(SetmealPageQueryDTO setmealPageQueryDTO) {
+        PageResult pageResult = setmealService.pageQuery(setmealPageQueryDTO);
         return Result.success(pageResult);
     }
 
     @DeleteMapping
     public Result<?> delete(@RequestParam List<Long> ids) {
-        setMealService.deleteBatch(ids);
+        setmealService.deleteBatch(ids);
         return  Result.success();
     }
 }

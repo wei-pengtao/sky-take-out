@@ -32,7 +32,7 @@ public class ShoppingCart implements Serializable {
     private Long dishId;
 
     //套餐id
-    private Long setMealId;
+    private Long setmealId;
 
     //口味
     private String dishFlavor;
