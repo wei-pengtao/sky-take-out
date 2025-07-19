@@ -11,7 +11,7 @@ import com.sky.entity.DishFlavor;
 import com.sky.exception.DeletionNotAllowedException;
 import com.sky.mapper.DishFlavorMapper;
 import com.sky.mapper.DishMapper;
-import com.sky.mapper.SetMealDishMapper;
+import com.sky.mapper.SetmealDishMapper;
 import com.sky.result.PageResult;
 import com.sky.service.DishService;
 import com.sky.vo.DishVO;
@@ -29,7 +29,7 @@ public class DishServiceImpl implements DishService {
 
     private final DishMapper dishMapper;
     private final DishFlavorMapper dishFlavorMapper;
-    private final SetMealDishMapper setMealDishMapper;
+    private final SetmealDishMapper setmealDishMapper;
 
     @Override
     @Transactional
@@ -63,8 +63,8 @@ public class DishServiceImpl implements DishService {
             }
         }
 
-        List<Long> setMealDishIds = setMealDishMapper.getDishIdsByDishIds(ids);
-        if (setMealDishIds != null && !setMealDishIds.isEmpty()) {
+        List<Long> setmealDishIds = setmealDishMapper.getDishIdsByDishIds(ids);
+        if (setmealDishIds != null && !setmealDishIds.isEmpty()) {
             throw new DeletionNotAllowedException(MessageConstant.DISH_BE_RELATED_BY_SETMEAL);
         }
 
@@ -106,5 +106,14 @@ public class DishServiceImpl implements DishService {
             flavors.forEach(flavor -> flavor.setDishId(dish.getId()));
             dishFlavorMapper.insertBatch(flavors);
         }
+    }
+
+    @Override
+    public List<Dish> list(Long categoryId) {
+        Dish dish = Dish.builder()
+                .categoryId(categoryId)
+                .status(StatusConstant.ENABLE)
+                .build();
+        return dishMapper.list(dish);
     }
 }
