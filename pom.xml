@@ -36,6 +36,7 @@
         <spring-security>6.4.5</spring-security>
         <wechatpay>0.4.8</wechatpay>
         <minio>8.5.17</minio>
+        <jackson>2.13.4</jackson>
     </properties>
     <dependencies>
     </dependencies>
