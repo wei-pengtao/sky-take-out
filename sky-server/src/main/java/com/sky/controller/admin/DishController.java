@@ -8,6 +8,7 @@ import com.sky.result.Result;
 import com.sky.service.DishService;
 import com.sky.vo.DishVO;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -18,10 +19,12 @@ import java.util.List;
 public class DishController {
 
     private final DishService dishService;
+    private final RedisTemplate<String, Object> redisTemplate;
 
     @PostMapping
     public Result<String> save(@RequestBody DishDTO dishDTO) {
         dishService.saveWithFlavor(dishDTO);
+        clearCache("dish_" + dishDTO.getCategoryId());
         return Result.success();
     }
 
@@ -34,12 +37,14 @@ public class DishController {
     @DeleteMapping
     public Result<String> delete(@RequestParam List<Long> ids) {
         dishService.deleteBatch(ids);
+        clearCache("dish_*");
         return Result.success();
     }
 
     @PostMapping("/status/{status}")
     public Result<String> startOrStop(@PathVariable Integer status, Long id) {
         dishService.startOrStop(status, id);
+        clearCache("dish_*");
         return Result.success();
     }
 
@@ -52,6 +57,7 @@ public class DishController {
     @PutMapping
     public Result<String> update(@RequestBody DishDTO dishDTO) {
         dishService.updateWithFlavor(dishDTO);
+        clearCache("dish_*");
         return Result.success();
     }
 
@@ -59,5 +65,9 @@ public class DishController {
     public Result<List<Dish>> list(Long categoryId) {
         List<Dish> list = dishService.list(categoryId);
         return Result.success(list);
+    }
+
+    private void clearCache(String pattern) {
+        redisTemplate.keys(pattern).forEach(redisTemplate::delete);
     }
 }
