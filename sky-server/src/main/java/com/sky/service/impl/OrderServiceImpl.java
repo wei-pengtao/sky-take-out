@@ -169,4 +169,24 @@ public class OrderServiceImpl implements OrderService {
 
         return orderVO;
     }
+
+    @Override
+    public void cancel(Long id) {
+        Orders orders = orderMapper.getById(id);
+        if (orders == null) {
+            throw new OrderBusinessException(MessageConstant.ORDER_NOT_FOUND);
+        }
+
+        if (!Orders.PENDING_PAYMENT.equals(orders.getStatus())) {
+            throw new OrderBusinessException(MessageConstant.ORDER_STATUS_ERROR);
+        }
+
+        // 更新订单状态为已取消
+        Orders updateOrder = Orders.builder()
+                .id(id)
+                .status(Orders.CANCELLED)
+                .cancelTime(LocalDateTime.now())
+                .build();
+        orderMapper.update(updateOrder);
+    }
 }

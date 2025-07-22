@@ -42,4 +42,10 @@ public class OrderController {
         OrderVO orderVO = orderService.orderDetail(id);
         return Result.success(orderVO);
     }
+
+    @PutMapping("/cancel/{id}")
+    public Result<?> cancel(@PathVariable Long id) {
+        orderService.cancel(id);
+        return Result.success();
+    }
 }
