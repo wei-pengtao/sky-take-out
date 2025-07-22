@@ -33,4 +33,6 @@ public interface OrderService {
     void adminCancelById(OrdersCancelDTO ordersCancelDTO) throws Exception;
 
     void delivery(Long id);
+
+    void complete(Long id);
 }
