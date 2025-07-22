@@ -325,4 +325,19 @@ public class OrderServiceImpl implements OrderService {
                 .build();
         orderMapper.update(ordersUpdate);
     }
+
+    @Override
+    public void delivery(Long id) {
+        Orders orders = orderMapper.getById(id);
+
+        if (orders == null || !orders.getStatus().equals(Orders.COMPLETED)) {
+            throw new OrderBusinessException(MessageConstant.ORDER_STATUS_ERROR);
+        }
+
+        Orders ordersUpdate = Orders.builder()
+                .id(id)
+                .status(Orders.DELIVERY_IN_PROGRESS)
+                .build();
+        orderMapper.update(ordersUpdate);
+    }
 }
