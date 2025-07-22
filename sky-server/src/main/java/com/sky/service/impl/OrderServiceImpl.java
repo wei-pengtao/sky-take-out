@@ -16,6 +16,7 @@ import com.sky.result.PageResult;
 import com.sky.service.OrderService;
 import com.sky.utils.WeChatPayUtil;
 import com.sky.vo.OrderPaymentVO;
+import com.sky.vo.OrderStatisticsVO;
 import com.sky.vo.OrderSubmitVO;
 import com.sky.vo.OrderVO;
 import lombok.RequiredArgsConstructor;
@@ -207,5 +208,50 @@ public class OrderServiceImpl implements OrderService {
         orderMapper.insert(orders);
         orderDetailList.forEach(detail -> detail.setOrderId(orders.getId()));
         orderDetailMapper.insertBatch(orderDetailList);
+    }
+
+    @Override
+    public PageResult conditionSearch(OrdersPageQueryDTO ordersPageQueryDTO) {
+        PageHelper.startPage(ordersPageQueryDTO.getPage(), ordersPageQueryDTO.getPageSize());
+        List<Orders> ordersList = orderMapper.page(ordersPageQueryDTO);
+
+        List<OrderVO> orderVOList = new ArrayList<>();
+        for (Orders orders : ordersList) {
+            OrderVO orderVO = new OrderVO();
+            BeanUtils.copyProperties(orders, orderVO);
+
+            // 查询订单详情
+            OrderDetail orderDetail = OrderDetail.builder()
+                    .orderId(orders.getId())
+                    .build();
+            List<OrderDetail> orderDetailList = orderDetailMapper.list(orderDetail);
+
+            StringBuilder orderDishes = new StringBuilder();
+            for (OrderDetail orderDetails : orderDetailList) {
+                orderDishes.append(orderDetails.getName())
+                        .append(" x ")
+                        .append(orderDetails.getNumber())
+                        .append("; ");
+            }
+            if (!orderDishes.isEmpty()) {
+                orderDishes.setLength(orderDishes.length() - 2); // 去掉最后的逗号和空格
+            }
+            orderVO.setOrderDishes(orderDishes.toString());
+
+            orderVOList.add(orderVO);
+        }
+
+        return new PageResult(ordersList.size(), orderVOList);
+    }
+
+    @Override
+    public OrderStatisticsVO statistics() {
+        OrderStatisticsVO orderStatisticsVO = new OrderStatisticsVO();
+
+        orderStatisticsVO.setToBeConfirmed(orderMapper.countStatus(Orders.TO_BE_CONFIRMED));
+        orderStatisticsVO.setConfirmed(orderMapper.countStatus(Orders.CONFIRMED));
+        orderStatisticsVO.setDeliveryInProgress(orderMapper.countStatus(Orders.DELIVERY_IN_PROGRESS));
+
+        return orderStatisticsVO;
     }
 }

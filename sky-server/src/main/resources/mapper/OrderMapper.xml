@@ -63,4 +63,10 @@
         </where>
         order by order_time desc
     </select>
+    <select id="statistics" resultType="com.sky.vo.OrderStatisticsVO">
+        select sum(if(status = 2, 1, 0)) as to_be_confirmed,
+               sum(if(status = 3, 1, 0)) as confirmed,
+               sum(if(status = 4, 1, 0)) as delivery_in_progress
+        from orders
+    </select>
 </mapper>
