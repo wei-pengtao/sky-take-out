@@ -6,6 +6,7 @@ import com.sky.constant.MessageConstant;
 import com.sky.context.BaseContext;
 import com.sky.dto.OrdersPageQueryDTO;
 import com.sky.dto.OrdersPaymentDTO;
+import com.sky.dto.OrdersRejectionDTO;
 import com.sky.dto.OrdersSubmitDTO;
 import com.sky.entity.*;
 import com.sky.exception.AddressBookBusinessException;
@@ -28,6 +29,7 @@ import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 @Service
 @RequiredArgsConstructor
@@ -275,5 +277,32 @@ public class OrderServiceImpl implements OrderService {
                 .status(Orders.CONFIRMED)
                 .build();
         orderMapper.update(orders);
+    }
+
+    @Override
+    public void rejection(OrdersRejectionDTO ordersRejectionDTO) throws Exception {
+        Orders orders = orderMapper.getById(ordersRejectionDTO.getId());
+
+        if (orders == null || !Objects.equals(orders.getStatus(), Orders.TO_BE_CONFIRMED)) {
+            throw new OrderBusinessException(MessageConstant.ORDER_STATUS_ERROR);
+        }
+
+        if (orders.getPayStatus().equals(Orders.PAID)) {
+            weChatPayUtil.refund(
+                    orders.getNumber(), // 商户订单号
+                    orders.getNumber(), // 商户退款单号
+                    orders.getAmount(), // 退款金额
+                    orders.getAmount() // 原订单金额
+            );
+            orders.setPayStatus(Orders.REFUND);
+        }
+
+        Orders ordersUpdate = Orders.builder()
+                .id(orders.getId())
+                .status(Orders.CANCELLED)
+                .cancelTime(LocalDateTime.now())
+                .rejectionReason(ordersRejectionDTO.getRejectionReason())
+                .build();
+        orderMapper.update(ordersUpdate);
     }
 }
