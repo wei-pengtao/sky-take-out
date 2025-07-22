@@ -189,4 +189,23 @@ public class OrderServiceImpl implements OrderService {
                 .build();
         orderMapper.update(updateOrder);
     }
+
+    @Override
+    public void repetition(Long id) {
+        Orders orders = orderMapper.getById(id);
+        if (orders == null) {
+            throw new OrderBusinessException(MessageConstant.ORDER_NOT_FOUND);
+        }
+
+        OrderDetail orderDetail = OrderDetail.builder()
+                .orderId(id)
+                .build();
+        List<OrderDetail> orderDetailList = orderDetailMapper.list(orderDetail);
+
+        orders.setOrderTime(LocalDateTime.now());
+        orders.setStatus(Orders.PENDING_PAYMENT);
+        orderMapper.insert(orders);
+        orderDetailList.forEach(detail -> detail.setOrderId(orders.getId()));
+        orderDetailMapper.insertBatch(orderDetailList);
+    }
 }

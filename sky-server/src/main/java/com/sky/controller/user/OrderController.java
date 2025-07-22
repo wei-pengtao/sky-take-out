@@ -48,4 +48,10 @@ public class OrderController {
         orderService.cancel(id);
         return Result.success();
     }
+
+    @PostMapping("/repetition/{id}")
+    public Result<?> repetition(@PathVariable Long id) {
+        orderService.repetition(id);
+        return Result.success();
+    }
 }
