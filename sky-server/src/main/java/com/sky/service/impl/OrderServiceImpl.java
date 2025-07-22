@@ -4,10 +4,7 @@ import com.alibaba.fastjson.JSONObject;
 import com.github.pagehelper.PageHelper;
 import com.sky.constant.MessageConstant;
 import com.sky.context.BaseContext;
-import com.sky.dto.OrdersPageQueryDTO;
-import com.sky.dto.OrdersPaymentDTO;
-import com.sky.dto.OrdersRejectionDTO;
-import com.sky.dto.OrdersSubmitDTO;
+import com.sky.dto.*;
 import com.sky.entity.*;
 import com.sky.exception.AddressBookBusinessException;
 import com.sky.exception.OrderBusinessException;
@@ -302,6 +299,29 @@ public class OrderServiceImpl implements OrderService {
                 .status(Orders.CANCELLED)
                 .cancelTime(LocalDateTime.now())
                 .rejectionReason(ordersRejectionDTO.getRejectionReason())
+                .build();
+        orderMapper.update(ordersUpdate);
+    }
+
+    @Override
+    public void adminCancelById(OrdersCancelDTO ordersCancelDTO) throws Exception {
+        Orders orders = orderMapper.getById(ordersCancelDTO.getId());
+
+        if (orders.getPayStatus().equals(Orders.PAID)) {
+            weChatPayUtil.refund(
+                    orders.getNumber(), // 商户订单号
+                    orders.getNumber(), // 商户退款单号
+                    orders.getAmount(), // 退款金额
+                    orders.getAmount() // 原订单金额
+            );
+            orders.setPayStatus(Orders.REFUND);
+        }
+
+        Orders ordersUpdate = Orders.builder()
+                .id(orders.getId())
+                .status(Orders.CANCELLED)
+                .cancelTime(LocalDateTime.now())
+                .cancelReason(ordersCancelDTO.getCancelReason())
                 .build();
         orderMapper.update(ordersUpdate);
     }
