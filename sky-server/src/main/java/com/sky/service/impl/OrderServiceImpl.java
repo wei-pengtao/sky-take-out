@@ -172,20 +172,31 @@ public class OrderServiceImpl implements OrderService {
     }
 
     @Override
-    public void cancel(Long id) {
+    public void userCancelById(Long id) throws Exception {
         Orders orders = orderMapper.getById(id);
         if (orders == null) {
             throw new OrderBusinessException(MessageConstant.ORDER_NOT_FOUND);
         }
 
-        if (!Orders.PENDING_PAYMENT.equals(orders.getStatus())) {
+        if (orders.getStatus() > Orders.TO_BE_CONFIRMED) {
             throw new OrderBusinessException(MessageConstant.ORDER_STATUS_ERROR);
+        }
+
+        if (orders.getStatus().equals(Orders.TO_BE_CONFIRMED)) {
+            weChatPayUtil.refund(
+                    orders.getNumber(),
+                    orders.getNumber(),
+                    orders.getAmount(),
+                    orders.getAmount()
+            );
+            orders.setPayStatus(Orders.REFUND);
         }
 
         // 更新订单状态为已取消
         Orders updateOrder = Orders.builder()
                 .id(id)
                 .status(Orders.CANCELLED)
+                .cancelReason("用户取消订单")
                 .cancelTime(LocalDateTime.now())
                 .build();
         orderMapper.update(updateOrder);
@@ -193,21 +204,23 @@ public class OrderServiceImpl implements OrderService {
 
     @Override
     public void repetition(Long id) {
-        Orders orders = orderMapper.getById(id);
-        if (orders == null) {
-            throw new OrderBusinessException(MessageConstant.ORDER_NOT_FOUND);
-        }
-
         OrderDetail orderDetail = OrderDetail.builder()
                 .orderId(id)
                 .build();
         List<OrderDetail> orderDetailList = orderDetailMapper.list(orderDetail);
 
-        orders.setOrderTime(LocalDateTime.now());
-        orders.setStatus(Orders.PENDING_PAYMENT);
-        orderMapper.insert(orders);
-        orderDetailList.forEach(detail -> detail.setOrderId(orders.getId()));
-        orderDetailMapper.insertBatch(orderDetailList);
+        List<ShoppingCart> shoppingCartList = new ArrayList<>();
+        for (OrderDetail orderDetails : orderDetailList) {
+            ShoppingCart shoppingCart = new ShoppingCart();
+
+            BeanUtils.copyProperties(orderDetails, shoppingCart);
+            shoppingCart.setUserId(BaseContext.getCurrentId());
+            shoppingCart.setCreateTime(LocalDateTime.now());
+
+            shoppingCartList.add(shoppingCart);
+        }
+
+        shoppingCartMapper.insertBatch(shoppingCartList);
     }
 
     @Override

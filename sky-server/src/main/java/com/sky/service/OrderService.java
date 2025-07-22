@@ -20,7 +20,7 @@ public interface OrderService {
 
     OrderVO orderDetail(Long id);
 
-    void cancel(Long id);
+    void userCancelById(Long id) throws Exception;
 
     void repetition(Long id);
 
