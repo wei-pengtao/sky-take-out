@@ -10,4 +10,30 @@
             #{od.amount})
         </foreach>
     </insert>
+    <select id="list" resultType="com.sky.entity.OrderDetail">
+        select * from order_detail
+        <where>
+            <if test="name != null and name != ''">
+                and name like concat('%', #{name}, '%')
+            </if>
+            <if test="orderId != null">
+                and order_id = #{orderId}
+            </if>
+            <if test="dishId != null">
+                and dish_id = #{dishId}
+            </if>
+            <if test="setmealId != null">
+                and setmeal_id = #{setmealId}
+            </if>
+            <if test="dishFlavor != null and dishFlavor != ''">
+                and dish_flavor like concat('%', #{dishFlavor}, '%')
+            </if>
+            <if test="number != null">
+                and number = #{number}
+            </if>
+            <if test="amount != null">
+                and amount = #{amount}
+            </if>
+        </where>
+    </select>
 </mapper>
