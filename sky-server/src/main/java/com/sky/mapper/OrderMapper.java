@@ -27,4 +27,6 @@ public interface OrderMapper {
 
     @Select("select * from orders where status = #{status} and order_time < #{time}")
     List<Orders> getByStatusAndOrderTimeBefore(Integer status, LocalDateTime time);
+
+    Double getTurnover(LocalDateTime startTime, LocalDateTime endTime, Integer status);
 }
