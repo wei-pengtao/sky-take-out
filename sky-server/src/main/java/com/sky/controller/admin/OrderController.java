@@ -1,6 +1,7 @@
 package com.sky.controller.admin;
 
 import com.sky.dto.OrdersCancelDTO;
+import com.sky.dto.OrdersConfirmDTO;
 import com.sky.dto.OrdersPageQueryDTO;
 import com.sky.dto.OrdersRejectionDTO;
 import com.sky.result.PageResult;
@@ -37,8 +38,8 @@ public class OrderController {
     }
 
     @PutMapping("/confirm")
-    public Result<?> confirm(@RequestBody Long id) {
-        orderService.confirm(id);
+    public Result<?> confirm(@RequestBody OrdersConfirmDTO ordersConfirmDTO) {
+        orderService.confirm(ordersConfirmDTO.getId());
         return Result.success();
     }
 
