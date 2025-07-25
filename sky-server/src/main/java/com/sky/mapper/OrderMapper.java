@@ -29,4 +29,6 @@ public interface OrderMapper {
     List<Orders> getByStatusAndOrderTimeBefore(Integer status, LocalDateTime time);
 
     Double getTurnover(LocalDateTime startTime, LocalDateTime endTime, Integer status);
+
+    Integer getOrderCount(LocalDateTime startTime, LocalDateTime endTime, Integer status);
 }
