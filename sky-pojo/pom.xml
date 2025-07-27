@@ -6,7 +6,6 @@
         <groupId>com.sky</groupId>
         <artifactId>sky-take-out</artifactId>
         <version>0.0.1-SNAPSHOT</version>
-        <relativePath/> <!-- lookup parent from repository -->
     </parent>
     <artifactId>sky-pojo</artifactId>
     <version>0.0.1-SNAPSHOT</version>
