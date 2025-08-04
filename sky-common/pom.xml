@@ -22,12 +22,10 @@
 		<dependency>
 			<groupId>com.alibaba</groupId>
 			<artifactId>fastjson</artifactId>
-			<version>${fastjson}</version>
 		</dependency>
 		<dependency>
 			<groupId>commons-lang</groupId>
 			<artifactId>commons-lang</artifactId>
-			<version>${commons-lang}</version>
 		</dependency>
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
@@ -36,7 +34,6 @@
 		<dependency>
 			<groupId>io.jsonwebtoken</groupId>
 			<artifactId>jjwt</artifactId>
-			<version>${jjwt}</version>
 		</dependency>
 		<!--支持配置属性类，yml文件中可以提示配置项-->
 		<dependency>
@@ -47,18 +44,15 @@
 		<dependency>
 			<groupId>javax.xml.bind</groupId>
 			<artifactId>jaxb-api</artifactId>
-			<version>${jaxb-api}</version>
 		</dependency>
 		<!--微信支付-->
 		<dependency>
 			<groupId>com.github.wechatpay-apiv3</groupId>
 			<artifactId>wechatpay-apache-httpclient</artifactId>
-			<version>${wechatpay}</version>
 		</dependency>
 		<dependency>
 			<groupId>io.minio</groupId>
 			<artifactId>minio</artifactId>
-			<version>${minio}</version>
 		</dependency>
 	</dependencies>
 </project>
