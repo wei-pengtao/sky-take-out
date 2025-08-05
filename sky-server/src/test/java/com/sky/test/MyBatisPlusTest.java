@@ -1,5 +1,6 @@
 package com.sky.test;
 
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.sky.entity.Employee;
 import com.sky.mapper.EmployeeMapper;
 import org.junit.jupiter.api.Test;
@@ -26,5 +27,17 @@ public class MyBatisPlusTest {
                 .name("管理员")
                 .build();
         employeeMapper.updateById(employee);
+    }
+
+    @Test
+    void testPageQuery() {
+        Page<Employee> employeePage = new Page<>(1, 10);
+        employeeMapper.selectPage(employeePage, null);
+        System.out.println("Total Records: " + employeePage.getTotal());
+        System.out.println("Total Pages: " + employeePage.getPages());
+        System.out.println("Records on Current Page: " + employeePage.getRecords());
+        for (Employee emp : employeePage.getRecords()) {
+            System.out.println(emp);
+        }
     }
 }
