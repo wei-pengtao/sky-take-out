@@ -80,24 +80,24 @@ public class EmployeeServiceImpl implements EmployeeService {
     @Override
     public void startOrStop(Long id, Integer status) {
         Employee employee = Employee.builder().status(status).id(id).build();
-        employeeMapper.update(employee);
+        employeeMapper.updateById(employee);
     }
 
     @Override
     public Employee getById(Long id) {
-        return employeeMapper.getById(id);
+        return employeeMapper.selectById(id);
     }
 
     @Override
     public void update(EmployeeDTO employeeDTO) {
         Employee employee = new Employee();
         BeanUtils.copyProperties(employeeDTO, employee);
-        employeeMapper.update(employee);
+        employeeMapper.updateById(employee);
     }
 
     @Override
     public void editPassword(PasswordEditDTO passwordEditDTO) {
-        Employee employee = employeeMapper.getById(passwordEditDTO.getEmpId());
+        Employee employee = employeeMapper.selectById(passwordEditDTO.getEmpId());
         if (employee == null) {
             throw new AccountNotFoundException(MessageConstant.ACCOUNT_NOT_FOUND);
         }
@@ -107,7 +107,7 @@ public class EmployeeServiceImpl implements EmployeeService {
         }
 
         employee.setPassword(passwordEncoder.encode(passwordEditDTO.getNewPassword()));
-        employeeMapper.update(employee);
+        employeeMapper.updateById(employee);
     }
 
 }

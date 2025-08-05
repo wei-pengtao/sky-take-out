@@ -72,12 +72,12 @@ public class CategoryServiceImpl implements CategoryService {
     public void update(CategoryDTO categoryDTO) {
         Category category = new Category();
         BeanUtils.copyProperties(categoryDTO,category);
-        categoryMapper.update(category);
+        categoryMapper.updateById(category);
     }
 
     public void startOrStop(Integer status, Long id) {
         Category category = Category.builder().id(id).status(status).build();
-        categoryMapper.update(category);
+        categoryMapper.updateById(category);
     }
 
     public List<Category> list(Integer type) {

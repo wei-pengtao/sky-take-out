@@ -1,5 +1,6 @@
 package com.sky.mapper;
 
+import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import com.sky.dto.GoodsSalesDTO;
 import com.sky.dto.OrdersPageQueryDTO;
 import com.sky.entity.Orders;
@@ -10,9 +11,7 @@ import java.time.LocalDateTime;
 import java.util.List;
 
 @Mapper
-public interface OrderMapper {
-    void insert(Orders orders);
-
+public interface OrderMapper extends BaseMapper<Orders> {
     @Select("select * from orders where number = #{number}")
     Orders getByNumber(String number);
 

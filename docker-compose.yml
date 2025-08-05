@@ -19,6 +19,8 @@ services:
     environment:
       TZ: Asia/Shanghai
       MYSQL_ROOT_PASSWORD: 123456
+    ports:
+      - "3306:3306"
     volumes:
       - "./sky-server/src/main/resources/initdb:/docker-entrypoint-initdb.d"
     networks:
