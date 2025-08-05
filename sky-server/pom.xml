@@ -1,149 +1,159 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
+<!-- ===================== 项目定义 ===================== -->
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0
+         https://maven.apache.org/xsd/maven-4.0.0.xsd">
+
+    <!-- 必需：POM 模型版本（固定值） -->
     <modelVersion>4.0.0</modelVersion>
+
+    <!-- 继承父项目（统一依赖管理） -->
     <parent>
         <groupId>com.sky</groupId>
         <artifactId>sky-take-out</artifactId>
         <version>0.0.1-SNAPSHOT</version>
     </parent>
+
+    <!-- 子模块坐标 -->
     <artifactId>sky-server</artifactId>
     <version>0.0.1-SNAPSHOT</version>
     <name>sky-server</name>
-    <description>sky-server</description>
-    <properties>
-        <java.version>21</java.version>
-    </properties>
+    <description>核心服务模块：包含业务逻辑、API接口、数据访问层等</description> <!-- 明确模块职责 -->
+
+    <!-- ===================== 依赖配置 ===================== -->
     <dependencies>
+        <!-- 项目内部模块依赖 -->
         <dependency>
             <groupId>com.sky</groupId>
-            <artifactId>sky-common</artifactId>
+            <artifactId>sky-common</artifactId> <!-- 公共工具类、配置类等 -->
+            <version>0.0.1-SNAPSHOT</version>
+        </dependency>
+        <dependency>
+            <groupId>com.sky</groupId>
+            <artifactId>sky-pojo</artifactId> <!-- 数据模型定义（DTO/VO/Entity） -->
             <version>0.0.1-SNAPSHOT</version>
         </dependency>
 
-        <dependency>
-            <groupId>com.sky</groupId>
-            <artifactId>sky-pojo</artifactId>
-            <version>0.0.1-SNAPSHOT</version>
-        </dependency>
-
+        <!-- Spring Boot 基础支持 -->
         <dependency>
             <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter</artifactId>
+            <artifactId>spring-boot-starter</artifactId> <!-- 核心自动配置 -->
         </dependency>
-
         <dependency>
             <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter-test</artifactId>
+            <artifactId>spring-boot-starter-web</artifactId> <!-- Web MVC 支持 -->
+        </dependency>
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-test</artifactId> <!-- 测试支持 -->
             <scope>test</scope>
         </dependency>
 
-        <dependency>
-            <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter-web</artifactId>
-            <scope>compile</scope>
-        </dependency>
-
-        <!-- https://mvnrepository.com/artifact/org.springframework.security/spring-security-crypto -->
+        <!-- 安全认证 -->
         <dependency>
             <groupId>org.springframework.security</groupId>
-            <artifactId>spring-security-crypto</artifactId>
+            <artifactId>spring-security-crypto</artifactId> <!-- 密码加密工具 -->
         </dependency>
 
+        <!-- 数据访问层 -->
         <dependency>
             <groupId>mysql</groupId>
-            <artifactId>mysql-connector-java</artifactId>
-            <scope>runtime</scope>
+            <artifactId>mysql-connector-java</artifactId> <!-- MySQL 驱动 -->
+            <scope>runtime</scope> <!-- 仅运行时需要 -->
         </dependency>
-
         <dependency>
             <groupId>com.baomidou</groupId>
-            <artifactId>mybatis-plus-spring-boot3-starter</artifactId>
+            <artifactId>mybatis-plus-spring-boot3-starter</artifactId> <!-- MyBatis-Plus ORM -->
         </dependency>
-
         <dependency>
             <groupId>com.baomidou</groupId>
-            <artifactId>mybatis-plus-jsqlparser</artifactId>
+            <artifactId>mybatis-plus-jsqlparser</artifactId> <!-- SQL 解析器（动态表名等） -->
         </dependency>
-
-        <dependency>
-            <groupId>org.projectlombok</groupId>
-            <artifactId>lombok</artifactId>
-        </dependency>
-
         <dependency>
             <groupId>com.alibaba</groupId>
-            <artifactId>fastjson</artifactId>
+            <artifactId>druid-spring-boot-starter</artifactId> <!-- 数据库连接池 -->
         </dependency>
 
-        <dependency>
-            <groupId>com.alibaba</groupId>
-            <artifactId>druid-spring-boot-starter</artifactId>
-        </dependency>
-
+        <!-- 分页插件 -->
         <dependency>
             <groupId>com.github.pagehelper</groupId>
             <artifactId>pagehelper-spring-boot-starter</artifactId>
         </dependency>
 
+        <!-- JSON 处理 -->
         <dependency>
-            <groupId>org.aspectj</groupId>
-            <artifactId>aspectjrt</artifactId>
+            <groupId>com.alibaba</groupId>
+            <artifactId>fastjson</artifactId> <!-- 高性能 JSON 库 -->
+        </dependency>
+        <dependency>
+            <groupId>com.fasterxml.jackson.datatype</groupId>
+            <artifactId>jackson-datatype-jsr310</artifactId> <!-- Java 8 时间类型支持 -->
         </dependency>
 
+        <!-- AOP 支持 -->
         <dependency>
             <groupId>org.aspectj</groupId>
-            <artifactId>aspectjweaver</artifactId>
+            <artifactId>aspectjrt</artifactId> <!-- AOP 运行时 -->
+        </dependency>
+        <dependency>
+            <groupId>org.aspectj</groupId>
+            <artifactId>aspectjweaver</artifactId> <!-- AOP 织入器 -->
         </dependency>
 
+        <!-- API 文档 -->
         <dependency>
             <groupId>com.github.xiaoymin</groupId>
-            <artifactId>knife4j-spring-boot-starter</artifactId>
+            <artifactId>knife4j-spring-boot-starter</artifactId> <!-- Swagger 增强UI -->
         </dependency>
 
+        <!-- 缓存与中间件 -->
         <dependency>
             <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter-data-redis</artifactId>
+            <artifactId>spring-boot-starter-data-redis</artifactId> <!-- Redis 集成 -->
         </dependency>
-
         <dependency>
             <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter-cache</artifactId>
+            <artifactId>spring-boot-starter-cache</artifactId> <!-- 声明式缓存 -->
         </dependency>
 
+        <!-- 实时通信 -->
         <dependency>
             <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter-websocket</artifactId>
+            <artifactId>spring-boot-starter-websocket</artifactId> <!-- WebSocket 支持 -->
         </dependency>
 
+        <!-- Excel 操作 -->
+        <dependency>
+            <groupId>org.apache.poi</groupId>
+            <artifactId>poi</artifactId> <!-- Excel 基础操作 -->
+        </dependency>
+        <dependency>
+            <groupId>org.apache.poi</groupId>
+            <artifactId>poi-ooxml</artifactId> <!-- Excel OOXML 格式支持 -->
+        </dependency>
+
+        <!-- XML 绑定（JJWT 依赖） -->
         <dependency>
             <groupId>javax.xml.bind</groupId>
             <artifactId>jaxb-api</artifactId>
         </dependency>
 
-        <!-- poi -->
+        <!-- 开发辅助 -->
         <dependency>
-            <groupId>org.apache.poi</groupId>
-            <artifactId>poi</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>org.apache.poi</groupId>
-            <artifactId>poi-ooxml</artifactId>
-        </dependency>
-
-        <dependency>
-            <groupId>com.fasterxml.jackson.datatype</groupId>
-            <artifactId>jackson-datatype-jsr310</artifactId>
+            <groupId>org.projectlombok</groupId>
+            <artifactId>lombok</artifactId> <!-- 自动生成代码 -->
         </dependency>
     </dependencies>
 
+    <!-- ===================== 构建配置 ===================== -->
     <build>
         <plugins>
+            <!-- Spring Boot 打包插件（支持可执行JAR） -->
             <plugin>
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-maven-plugin</artifactId>
             </plugin>
         </plugins>
     </build>
-
 </project>
