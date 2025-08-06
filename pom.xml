@@ -35,7 +35,6 @@
         <module>sky-common</module>
         <module>sky-pojo</module>
         <module>sky-server</module>
-        <module>dish-service</module>
     </modules>
 
     <!-- ===================== 全局属性配置 ===================== -->
