@@ -40,13 +40,6 @@
         <!-- ⚠️ 以下依赖需根据实际使用场景调整 -->
         <!-- 若当前模块仅为纯POJO定义，以下依赖可能更适合其他模块 -->
 
-        <!-- API文档生成（通常放在web模块） -->
-        <dependency>
-            <groupId>com.github.xiaoymin</groupId>
-            <artifactId>knife4j-spring-boot-starter</artifactId> <!-- 生成Swagger接口文档 -->
-            <!-- 若POJO模块不直接提供Controller，建议移至sky-server模块 -->
-        </dependency>
-
         <!-- MyBatis-Plus集成（通常放在数据访问层模块） -->
         <dependency>
             <groupId>com.baomidou</groupId>

@@ -68,9 +68,5 @@
 			<groupId>com.github.wechatpay-apiv3</groupId>
 			<artifactId>wechatpay-apache-httpclient</artifactId> <!-- 微信支付SDK -->
 		</dependency>
-		<dependency>
-			<groupId>io.minio</groupId>
-			<artifactId>minio</artifactId> <!-- 对象存储服务 -->
-		</dependency>
 	</dependencies>
 </project>

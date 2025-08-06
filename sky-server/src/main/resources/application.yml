@@ -35,6 +35,12 @@ logging:
         service: info
         controller: info
 
+minio:
+  endpoint: ${sky.minio.endpoint}
+  access-key: ${sky.minio.access-key}
+  secret-key: ${sky.minio.secret-key}
+  bucket-name: ${sky.minio.bucket-name}
+
 sky:
   jwt:
     # 设置jwt签名加密时使用的秘钥
@@ -46,12 +52,6 @@ sky:
     user-secret-key: sky_take_out_user_secret_key
     user-ttl: 604800000
     user-token-name: authentication
-
-  minio:
-    endpoint: ${sky.minio.endpoint}
-    access-key: ${sky.minio.access-key}
-    secret-key: ${sky.minio.secret-key}
-    bucket-name: ${sky.minio.bucket-name}
 
   wechat:
     appid: ${sky.wechat.appid}

@@ -35,6 +35,7 @@
         <module>sky-common</module>
         <module>sky-pojo</module>
         <module>sky-server</module>
+        <module>dish-service</module>
     </modules>
 
     <!-- ===================== 全局属性配置 ===================== -->
@@ -47,13 +48,15 @@
         <mybatis-plus>3.5.12</mybatis-plus>
         <druid>1.2.1</druid>
         <pagehelper>1.3.0</pagehelper>
+        <spring-cloud>2025.0.0</spring-cloud>
+        <spring-cloud-alibaba>2023.0.3.3</spring-cloud-alibaba>
         <spring-security>6.4.5</spring-security>
 
         <!-- 工具库版本 -->
         <lombok>1.18.30</lombok>
         <fastjson>1.2.83</fastjson>
         <commons-lang>2.6</commons-lang>
-        <knife4j>3.0.3</knife4j>
+        <knife4j>4.5.0</knife4j>
         <aspectj>1.9.4</aspectj>
         <jackson>2.19.0</jackson>
         <poi>5.4.0</poi>
@@ -68,12 +71,33 @@
 
         <!-- 数据库驱动 -->
         <mysql>8.0.33</mysql>
+
+        <!-- 项目内部模块版本 -->
+        <minio-util>0.0.1-SNAPSHOT</minio-util>
     </properties>
 
     <!-- ===================== 依赖管理 ===================== -->
     <!-- 统一管理子模块依赖版本（不自动引入依赖） -->
     <dependencyManagement>
         <dependencies>
+            <!-- spring cloud-->
+            <!-- https://mvnrepository.com/artifact/org.springframework.cloud/spring-cloud-dependencies -->
+            <dependency>
+                <groupId>org.springframework.cloud</groupId>
+                <artifactId>spring-cloud-dependencies</artifactId>
+                <version>${spring-cloud}</version>
+                <type>pom</type>
+                <scope>import</scope>
+            </dependency>
+            <!-- https://mvnrepository.com/artifact/com.alibaba.cloud/spring-cloud-alibaba-dependencies -->
+            <dependency>
+                <groupId>com.alibaba.cloud</groupId>
+                <artifactId>spring-cloud-alibaba-dependencies</artifactId>
+                <version>${spring-cloud-alibaba}</version>
+                <type>pom</type>
+                <scope>import</scope>
+            </dependency>
+
             <!-- 开发工具 -->
             <dependency>
                 <groupId>org.projectlombok</groupId>
@@ -91,13 +115,6 @@
                 <groupId>com.alibaba</groupId>
                 <artifactId>fastjson</artifactId>
                 <version>${fastjson}</version>
-            </dependency>
-
-            <!-- API文档 -->
-            <dependency>
-                <groupId>com.github.xiaoymin</groupId>
-                <artifactId>knife4j-spring-boot-starter</artifactId>
-                <version>${knife4j}</version>
             </dependency>
 
             <!-- 工具类库 -->
@@ -130,9 +147,9 @@
 
             <!-- 对象存储 -->
             <dependency>
-                <groupId>io.minio</groupId>
-                <artifactId>minio</artifactId>
-                <version>${minio}</version>
+                <groupId>com.minio.oss</groupId>
+                <artifactId>minio-oss-spring-boot-starter</artifactId>
+                <version>${minio-util}</version>
             </dependency>
 
             <!-- 安全框架 -->

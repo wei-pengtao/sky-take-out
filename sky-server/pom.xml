@@ -101,12 +101,6 @@
             <artifactId>aspectjweaver</artifactId> <!-- AOP 织入器 -->
         </dependency>
 
-        <!-- API 文档 -->
-        <dependency>
-            <groupId>com.github.xiaoymin</groupId>
-            <artifactId>knife4j-spring-boot-starter</artifactId> <!-- Swagger 增强UI -->
-        </dependency>
-
         <!-- 缓存与中间件 -->
         <dependency>
             <groupId>org.springframework.boot</groupId>
@@ -143,6 +137,11 @@
         <dependency>
             <groupId>org.projectlombok</groupId>
             <artifactId>lombok</artifactId> <!-- 自动生成代码 -->
+        </dependency>
+
+        <dependency>
+            <groupId>com.minio.oss</groupId>
+            <artifactId>minio-oss-spring-boot-starter</artifactId>
         </dependency>
     </dependencies>
 
