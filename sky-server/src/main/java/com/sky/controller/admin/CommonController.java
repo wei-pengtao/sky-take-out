@@ -1,7 +1,7 @@
 package com.sky.controller.admin;
 
+import com.minio.oss.MinioOssUtil;
 import com.sky.result.Result;
-import com.sky.utils.MinioOssUtil;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;

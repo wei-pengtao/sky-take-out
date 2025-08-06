@@ -1,35 +1,50 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
+<!-- ===================== 项目定义 ===================== -->
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0
+         https://maven.apache.org/xsd/maven-4.0.0.xsd">
+
+    <!-- 必需：POM 模型版本（固定值） -->
     <modelVersion>4.0.0</modelVersion>
+
+    <!-- 继承父项目（统一依赖管理） -->
     <parent>
         <groupId>com.sky</groupId>
         <artifactId>sky-take-out</artifactId>
-        <version>0.0.1-SNAPSHOT</version>
-        <relativePath/> <!-- lookup parent from repository -->
+        <version>0.0.1-SNAPSHOT</version> <!-- 版本由父模块统一管理 -->
     </parent>
+
+    <!-- 子模块坐标 -->
     <artifactId>sky-pojo</artifactId>
     <version>0.0.1-SNAPSHOT</version>
     <name>sky-pojo</name>
-    <description>sky-pojo</description>
-    <properties>
-        <java.version>21</java.version>
-    </properties>
+    <description>数据模型模块：实体类、DTO、VO等对象定义</description> <!-- 明确模块职责 -->
+
+    <!-- ===================== 依赖配置 ===================== -->
     <dependencies>
+        <!-- 开发工具类 -->
         <dependency>
             <groupId>org.projectlombok</groupId>
-            <artifactId>lombok</artifactId>
-            <version>${lombok}</version>
+            <artifactId>lombok</artifactId> <!-- 自动生成Getter/Setter/Builder等，简化POJO代码 -->
+            <!-- 版本由父模块 dependencyManagement 统一管理 -->
         </dependency>
+
+        <!-- JSON序列化支持 -->
         <dependency>
             <groupId>com.fasterxml.jackson.core</groupId>
-            <artifactId>jackson-databind</artifactId>
-            <version>${jackson}</version>
+            <artifactId>jackson-databind</artifactId> <!-- 处理对象与JSON的相互转换 -->
+            <!-- 适用于DTO序列化到前端或接收反序列化请求 -->
         </dependency>
+
+        <!-- ⚠️ 以下依赖需根据实际使用场景调整 -->
+        <!-- 若当前模块仅为纯POJO定义，以下依赖可能更适合其他模块 -->
+
+        <!-- MyBatis-Plus集成（通常放在数据访问层模块） -->
         <dependency>
-            <groupId>com.github.xiaoymin</groupId>
-            <artifactId>knife4j-spring-boot-starter</artifactId>
-            <version>${knife4j}</version>
+            <groupId>com.baomidou</groupId>
+            <artifactId>mybatis-plus-spring-boot3-starter</artifactId> <!-- ORM框架增强 -->
+            <!-- 若POJO模块仅定义实体类而非DAO层，建议移至sky-server模块 -->
         </dependency>
     </dependencies>
 </project>

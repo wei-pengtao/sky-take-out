@@ -1,53 +1,228 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
+<!-- ===================== 项目定义 ===================== -->
+<!-- 定义XML和Maven POM的命名空间 -->
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0
+         https://maven.apache.org/xsd/maven-4.0.0.xsd">
+
+    <!-- 必需：指定POM模型版本（固定值） -->
     <modelVersion>4.0.0</modelVersion>
+
+    <!-- 继承Spring Boot的父POM，统一管理Spring生态依赖版本 -->
     <parent>
         <groupId>org.springframework.boot</groupId>
         <artifactId>spring-boot-starter-parent</artifactId>
         <version>3.5.0</version>
-        <relativePath/> <!-- lookup parent from repository -->
+        <!-- 表示不从本地路径查找父POM -->
+        <relativePath/>
     </parent>
+
+    <!-- 项目基础坐标 -->
     <groupId>com.sky</groupId>
     <artifactId>sky-take-out</artifactId>
     <version>0.0.1-SNAPSHOT</version>
+
+    <!-- 多模块项目，打包类型必须为pom -->
     <packaging>pom</packaging>
+
+    <!-- 项目名称和描述 -->
     <name>sky-take-out</name>
     <description>sky-take-out</description>
+
+    <!-- 聚合的多模块列表 -->
     <modules>
         <module>sky-common</module>
         <module>sky-pojo</module>
         <module>sky-server</module>
+        <module>dish-service</module>
     </modules>
+
+    <!-- ===================== 全局属性配置 ===================== -->
+    <!-- 统一管理依赖版本，便于版本升级 -->
     <properties>
+        <!-- 环境配置 -->
         <java.version>21</java.version>
-        <mybatis.spring>3.0.4</mybatis.spring>
+
+        <!-- 框架/组件版本 -->
+        <mybatis-plus>3.5.12</mybatis-plus>
+        <druid>1.2.1</druid>
+        <pagehelper>1.3.0</pagehelper>
+        <spring-cloud>2025.0.0</spring-cloud>
+        <spring-cloud-alibaba>2023.0.3.3</spring-cloud-alibaba>
+        <spring-security>6.4.5</spring-security>
+
+        <!-- 工具库版本 -->
         <lombok>1.18.30</lombok>
         <fastjson>1.2.83</fastjson>
         <commons-lang>2.6</commons-lang>
-        <druid>1.2.1</druid>
-        <pagehelper>1.3.0</pagehelper>
-        <knife4j>3.0.3</knife4j>
+        <knife4j>4.5.0</knife4j>
         <aspectj>1.9.4</aspectj>
+        <jackson>2.19.0</jackson>
+        <poi>5.4.0</poi>
+
+        <!-- 安全组件 -->
         <jjwt>0.9.1</jjwt>
         <jaxb-api>2.3.1</jaxb-api>
-        <poi>5.4.0</poi>
-        <mysql>8.0.33</mysql>
-        <spring-security>6.4.5</spring-security>
+
+        <!-- 云服务集成 -->
         <wechatpay>0.4.8</wechatpay>
         <minio>8.5.17</minio>
-        <jackson>2.13.4</jackson>
+
+        <!-- 数据库驱动 -->
+        <mysql>8.0.33</mysql>
+
+        <!-- 项目内部模块版本 -->
+        <minio-util>0.0.1-SNAPSHOT</minio-util>
     </properties>
-    <dependencies>
-    </dependencies>
 
-    <build>
-        <plugins>
-            <plugin>
-                <groupId>org.springframework.boot</groupId>
-                <artifactId>spring-boot-maven-plugin</artifactId>
-            </plugin>
-        </plugins>
-    </build>
+    <!-- ===================== 依赖管理 ===================== -->
+    <!-- 统一管理子模块依赖版本（不自动引入依赖） -->
+    <dependencyManagement>
+        <dependencies>
+            <!-- spring cloud-->
+            <!-- https://mvnrepository.com/artifact/org.springframework.cloud/spring-cloud-dependencies -->
+            <dependency>
+                <groupId>org.springframework.cloud</groupId>
+                <artifactId>spring-cloud-dependencies</artifactId>
+                <version>${spring-cloud}</version>
+                <type>pom</type>
+                <scope>import</scope>
+            </dependency>
+            <!-- https://mvnrepository.com/artifact/com.alibaba.cloud/spring-cloud-alibaba-dependencies -->
+            <dependency>
+                <groupId>com.alibaba.cloud</groupId>
+                <artifactId>spring-cloud-alibaba-dependencies</artifactId>
+                <version>${spring-cloud-alibaba}</version>
+                <type>pom</type>
+                <scope>import</scope>
+            </dependency>
 
+            <!-- 开发工具 -->
+            <dependency>
+                <groupId>org.projectlombok</groupId>
+                <artifactId>lombok</artifactId>
+                <version>${lombok}</version>
+            </dependency>
+
+            <!-- JSON处理 -->
+            <dependency>
+                <groupId>com.fasterxml.jackson.core</groupId>
+                <artifactId>jackson-databind</artifactId>
+                <version>${jackson}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.alibaba</groupId>
+                <artifactId>fastjson</artifactId>
+                <version>${fastjson}</version>
+            </dependency>
+
+            <!-- 工具类库 -->
+            <dependency>
+                <groupId>commons-lang</groupId>
+                <artifactId>commons-lang</artifactId>
+                <version>${commons-lang}</version>
+            </dependency>
+
+            <!-- JWT认证 -->
+            <dependency>
+                <groupId>io.jsonwebtoken</groupId>
+                <artifactId>jjwt</artifactId>
+                <version>${jjwt}</version>
+            </dependency>
+
+            <!-- XML绑定 -->
+            <dependency>
+                <groupId>javax.xml.bind</groupId>
+                <artifactId>jaxb-api</artifactId>
+                <version>${jaxb-api}</version>
+            </dependency>
+
+            <!-- 支付集成 -->
+            <dependency>
+                <groupId>com.github.wechatpay-apiv3</groupId>
+                <artifactId>wechatpay-apache-httpclient</artifactId>
+                <version>${wechatpay}</version>
+            </dependency>
+
+            <!-- 对象存储 -->
+            <dependency>
+                <groupId>com.minio.oss</groupId>
+                <artifactId>minio-oss-spring-boot-starter</artifactId>
+                <version>${minio-util}</version>
+            </dependency>
+
+            <!-- 安全框架 -->
+            <dependency>
+                <groupId>org.springframework.security</groupId>
+                <artifactId>spring-security-crypto</artifactId>
+                <version>${spring-security}</version>
+            </dependency>
+
+            <!-- 数据库 -->
+            <dependency>
+                <groupId>mysql</groupId>
+                <artifactId>mysql-connector-java</artifactId>
+                <scope>runtime</scope> <!-- 仅运行时需要 -->
+                <version>${mysql}</version>
+            </dependency>
+
+            <!-- MyBatis增强 -->
+            <dependency>
+                <groupId>com.baomidou</groupId>
+                <artifactId>mybatis-plus-spring-boot3-starter</artifactId>
+                <version>${mybatis-plus}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.baomidou</groupId>
+                <artifactId>mybatis-plus-jsqlparser</artifactId>
+                <version>${mybatis-plus}</version>
+            </dependency>
+
+            <!-- 数据库连接池 -->
+            <dependency>
+                <groupId>com.alibaba</groupId>
+                <artifactId>druid-spring-boot-starter</artifactId>
+                <version>${druid}</version>
+            </dependency>
+
+            <!-- 分页插件 -->
+            <dependency>
+                <groupId>com.github.pagehelper</groupId>
+                <artifactId>pagehelper-spring-boot-starter</artifactId>
+                <version>${pagehelper}</version>
+            </dependency>
+
+            <!-- AOP支持 -->
+            <dependency>
+                <groupId>org.aspectj</groupId>
+                <artifactId>aspectjrt</artifactId>
+                <version>${aspectj}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.aspectj</groupId>
+                <artifactId>aspectjweaver</artifactId>
+                <version>${aspectj}</version>
+            </dependency>
+
+            <!-- Excel处理 -->
+            <dependency>
+                <groupId>org.apache.poi</groupId>
+                <artifactId>poi</artifactId>
+                <version>${poi}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.apache.poi</groupId>
+                <artifactId>poi-ooxml</artifactId>
+                <version>${poi}</version>
+            </dependency>
+
+            <!-- Java8时间支持 -->
+            <dependency>
+                <groupId>com.fasterxml.jackson.datatype</groupId>
+                <artifactId>jackson-datatype-jsr310</artifactId>
+                <version>${jackson}</version>
+            </dependency>
+        </dependencies>
+    </dependencyManagement>
 </project>

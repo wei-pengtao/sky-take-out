@@ -1,0 +1,31 @@
+sky:
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    host: mysql-service
+    port: 3306
+    database: sky_take_out
+    username: root
+    password: 123456
+
+  minio:
+    endpoint: http://minio-service:9000
+    access-key: minioadmin
+    secret-key: minioadmin
+    bucket-name: sky-take-out
+
+  redis:
+    host: redis-service
+    port: 6379
+    password: 123456
+    database: 0
+
+  wechat:
+    appid: wxb4ca15d63fa04e17
+    secret: 3563d4f0d54a7966d587cc1b6108ea57
+    mchid: 1600000000
+    mch-serial-no: 1600000000
+    private-key-file-path: classpath:cert/apiclient_key.pem
+    api-v3-key: 1234567890abcdef1234567890abcdef
+    we-chat-pay-cert-file-path: classpath:cert/apiclient_cert.p12
+    notify-url: http://localhost:8080/notify/paySuccess
+    refund-notify-url: http://localhost:8080/notify/refundSuccess

@@ -1,5 +1,6 @@
 package com.sky.mapper;
 
+import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import com.sky.entity.DishFlavor;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Select;
@@ -7,9 +8,7 @@ import org.apache.ibatis.annotations.Select;
 import java.util.List;
 
 @Mapper
-public interface DishFlavorMapper {
-    void insertBatch(List<DishFlavor> flavors);
-
+public interface DishFlavorMapper extends BaseMapper<DishFlavor> {
     void deleteBatchByDishIds(List<Long> dishIds);
 
     @Select("select * from dish_flavor where dish_id = #{id}")

@@ -29,11 +29,11 @@ public class AddressBookServiceImpl implements AddressBookService {
     }
 
     public AddressBook getById(Long id) {
-        return addressBookMapper.getById(id);
+        return addressBookMapper.selectById(id);
     }
 
     public void update(AddressBook addressBook) {
-        addressBookMapper.update(addressBook);
+        addressBookMapper.updateById(addressBook);
     }
 
     @Transactional
@@ -45,7 +45,7 @@ public class AddressBookServiceImpl implements AddressBookService {
 
         //2、将当前地址改为默认地址 update address_book set is_default = ? where id = ?
         addressBook.setIsDefault(1);
-        addressBookMapper.update(addressBook);
+        addressBookMapper.updateById(addressBook);
     }
 
     public void deleteById(Long id) {

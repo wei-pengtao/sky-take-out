@@ -1,64 +1,72 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
+<!-- ===================== 项目定义 ===================== -->
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+		 xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+		 xsi:schemaLocation="http://maven.apache.org/POM/4.0.0
+         https://maven.apache.org/xsd/maven-4.0.0.xsd">
+
+	<!-- 必需：POM 模型版本（固定值） -->
 	<modelVersion>4.0.0</modelVersion>
+
+	<!-- 继承父项目配置（统一依赖版本管理） -->
 	<parent>
 		<groupId>com.sky</groupId>
 		<artifactId>sky-take-out</artifactId>
 		<version>0.0.1-SNAPSHOT</version>
 	</parent>
+
+	<!-- 子模块坐标 -->
 	<artifactId>sky-common</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
 	<name>sky-common</name>
-	<description>sky-common</description>
-	<properties>
-		<java.version>21</java.version>
-	</properties>
+	<description>公共模块：存放工具类、安全组件、云服务集成等通用功能</description>
+
+	<!-- ===================== 依赖配置 ===================== -->
 	<dependencies>
+		<!-- 开发工具类 -->
 		<dependency>
 			<groupId>org.projectlombok</groupId>
-			<artifactId>lombok</artifactId>
+			<artifactId>lombok</artifactId> <!-- 自动生成Getter/Setter等 -->
+			<!-- 版本由父模块 dependencyManagement 统一管理 -->
 		</dependency>
+
+		<!-- JSON 处理库 -->
 		<dependency>
 			<groupId>com.alibaba</groupId>
-			<artifactId>fastjson</artifactId>
-			<version>${fastjson}</version>
+			<artifactId>fastjson</artifactId> <!-- 高性能JSON解析库 -->
 		</dependency>
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-json</artifactId> <!-- Spring官方JSON支持 -->
+		</dependency>
+
+		<!-- 工具类库 -->
 		<dependency>
 			<groupId>commons-lang</groupId>
-			<artifactId>commons-lang</artifactId>
-			<version>${commons-lang}</version>
+			<artifactId>commons-lang</artifactId> <!-- Apache通用工具包 -->
 		</dependency>
-		<dependency>
-			<groupId>org.springframework.boot</groupId>
-			<artifactId>spring-boot-starter-json</artifactId>
-		</dependency>
+
+		<!-- 安全认证 -->
 		<dependency>
 			<groupId>io.jsonwebtoken</groupId>
-			<artifactId>jjwt</artifactId>
-			<version>${jjwt}</version>
-		</dependency>
-		<!--支持配置属性类，yml文件中可以提示配置项-->
-		<dependency>
-			<groupId>org.springframework.boot</groupId>
-			<artifactId>spring-boot-configuration-processor</artifactId>
-			<optional>true</optional>
+			<artifactId>jjwt</artifactId> <!-- JWT令牌生成/验证 -->
 		</dependency>
 		<dependency>
 			<groupId>javax.xml.bind</groupId>
-			<artifactId>jaxb-api</artifactId>
-			<version>${jaxb-api}</version>
+			<artifactId>jaxb-api</artifactId> <!-- XML绑定支持（JJWT依赖） -->
 		</dependency>
-		<!--微信支付-->
+
+		<!-- 配置元数据生成（IDEA提示优化） -->
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-configuration-processor</artifactId>
+			<optional>true</optional> <!-- 不传递依赖，仅编译期生效 -->
+		</dependency>
+
+		<!-- 云服务集成 -->
 		<dependency>
 			<groupId>com.github.wechatpay-apiv3</groupId>
-			<artifactId>wechatpay-apache-httpclient</artifactId>
-			<version>${wechatpay}</version>
-		</dependency>
-		<dependency>
-			<groupId>io.minio</groupId>
-			<artifactId>minio</artifactId>
-			<version>${minio}</version>
+			<artifactId>wechatpay-apache-httpclient</artifactId> <!-- 微信支付SDK -->
 		</dependency>
 	</dependencies>
 </project>

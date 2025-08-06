@@ -43,7 +43,7 @@ public class OrderServiceImpl implements OrderService {
     @Override
     @Transactional
     public OrderSubmitVO submit(OrdersSubmitDTO ordersSubmitDTO) {
-        AddressBook addressBook = addressBookMapper.getById(ordersSubmitDTO.getAddressBookId());
+        AddressBook addressBook = addressBookMapper.selectById(ordersSubmitDTO.getAddressBookId());
         if (addressBook == null) {
             throw new AddressBookBusinessException(MessageConstant.ADDRESS_BOOK_IS_NULL);
         }
