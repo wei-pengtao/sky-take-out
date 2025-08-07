@@ -3,10 +3,7 @@ package com.sky.employee.service.impl;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.jwt.util.JwtUtil;
-import com.sky.employee.domain.dto.EmployeeDTO;
-import com.sky.employee.domain.dto.EmployeeLoginDTO;
-import com.sky.employee.domain.dto.EmployeePageQueryDTO;
-import com.sky.employee.domain.dto.PageResultDTO;
+import com.sky.employee.domain.dto.*;
 import com.sky.employee.domain.entity.Employee;
 import com.sky.employee.domain.vo.EmployeeLoginVO;
 import com.sky.employee.domain.vo.EmployeeVO;
@@ -26,6 +23,7 @@ import java.util.Map;
 public class EmployeeServiceImpl extends ServiceImpl<EmployeeMapper, Employee> implements EmployeeService {
 
     private final BCryptPasswordEncoder passwordEncoder;
+    private final EmployeeMapper employeeMapper;
     private final JwtUtil jwtUtil;
 
     @Override
@@ -91,5 +89,54 @@ public class EmployeeServiceImpl extends ServiceImpl<EmployeeMapper, Employee> i
                 .username(employee.getUsername())
                 .token(jwt)
                 .build();
+    }
+
+    @Override
+    public void editPassword(EmployeeEditPasswordDTO employeeEditPasswordDTO) {
+        Employee employee = employeeMapper.selectById(employeeEditPasswordDTO.getEmpId());
+
+        if (employee == null) {
+            throw new RuntimeException("员工不存在");
+        }
+
+        if (!passwordEncoder.matches(employeeEditPasswordDTO.getOldPassword(), employee.getPassword())) {
+            throw new RuntimeException("旧密码错误");
+        }
+
+        employee = Employee.builder()
+                .id(employee.getId())
+                .password(passwordEncoder.encode(employeeEditPasswordDTO.getNewPassword()))
+                .build();
+        updateById(employee);
+    }
+
+    @Override
+    public void updateStatus(Long id, Integer status) {
+        Employee employee = employeeMapper.selectById(id);
+
+        if (employee == null) {
+            throw new RuntimeException("员工不存在");
+        }
+
+        if (!status.equals(Employee.STATUS_ENABLED) && !status.equals(Employee.STATUS_DISABLED)) {
+            throw new RuntimeException("无效的状态");
+        }
+
+        employee = Employee.builder()
+                .id(employee.getId())
+                .status(status)
+                .build();
+        updateById(employee);
+    }
+
+    @Override
+    public EmployeeVO getById(Long id) {
+        Employee employee = employeeMapper.selectById(id);
+        if (employee == null) {
+            throw new RuntimeException("员工不存在");
+        }
+        EmployeeVO employeeVO = new EmployeeVO();
+        BeanUtils.copyProperties(employee, employeeVO);
+        return employeeVO;
     }
 }
