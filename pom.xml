@@ -12,7 +12,7 @@
     <parent>
         <groupId>org.springframework.boot</groupId>
         <artifactId>spring-boot-starter-parent</artifactId>
-        <version>3.5.0</version>
+        <version>3.5.4</version>
         <!-- 表示不从本地路径查找父POM -->
         <relativePath/>
     </parent>
@@ -44,7 +44,6 @@
         <mybatis-plus.version>3.5.12</mybatis-plus.version>
         <spring-cloud.version>2025.0.0</spring-cloud.version>
         <spring-cloud-alibaba.version>2023.0.3.3</spring-cloud-alibaba.version>
-        <spring-security.version>6.4.5</spring-security.version>
 
         <!-- 工具库版本 -->
         <lombok.version>1.18.30</lombok.version>
@@ -54,6 +53,10 @@
 
         <!-- 数据库驱动 -->
         <mysql.version>8.0.33</mysql.version>
+
+        <!-- Swagger文档 -->
+        <!-- 使用Knife4j增强Swagger文档 -->
+        <knife4j.version>4.5.0</knife4j.version>
     </properties>
 
     <!-- ===================== 依赖管理 ===================== -->
@@ -92,13 +95,6 @@
                 <version>${jjwt.version}</version>
             </dependency>
 
-            <!-- 安全框架 -->
-            <dependency>
-                <groupId>org.springframework.security</groupId>
-                <artifactId>spring-security-crypto</artifactId>
-                <version>${spring-security.version}</version>
-            </dependency>
-
             <!-- 数据库 -->
             <dependency>
                 <groupId>mysql</groupId>
@@ -117,6 +113,14 @@
                 <groupId>com.baomidou</groupId>
                 <artifactId>mybatis-plus-jsqlparser</artifactId>
                 <version>${mybatis-plus.version}</version>
+            </dependency>
+
+            <!-- Swagger文档 -->
+            <!-- 使用Knife4j增强Swagger文档 -->
+            <dependency>
+                <groupId>com.github.xiaoymin</groupId>
+                <artifactId>knife4j-openapi3-jakarta-spring-boot-starter</artifactId>
+                <version>${knife4j.version}</version>
             </dependency>
         </dependencies>
     </dependencyManagement>
