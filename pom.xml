@@ -31,7 +31,7 @@
 
     <!-- 聚合的多模块列表 -->
     <modules>
-        <module>employee-service</module>
+        <module>shop-service</module>
     </modules>
 
     <!-- ===================== 全局属性配置 ===================== -->
