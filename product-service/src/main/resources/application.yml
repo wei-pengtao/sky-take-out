@@ -1,0 +1,40 @@
+# ==================== 服务器配置 ====================
+server:
+  port: 8080                              # 服务监听端口
+
+# ==================== Spring 框架配置 ====================
+spring:
+  application:
+    name: product-service                # 应用名称（服务注册标识）
+  profiles:
+    active: dev                          # 激活的配置文件（开发环境）
+
+  # 数据源配置（MySQL）
+  datasource:
+    url: jdbc:mysql://${database.host}:${database.port}/${database.name}?serverTimezone=Asia/Shanghai&useUnicode=true&characterEncoding=utf-8&zeroDateTimeBehavior=convertToNull&useSSL=false&allowPublicKeyRetrieval=true
+    username: ${database.username}         # 数据库用户名
+    password: ${database.password}         # 数据库密码
+    driver-class-name: com.mysql.cj.jdbc.Driver
+
+# MyBatis-Plus 配置
+mybatis-plus:
+  mapper-locations: classpath:mapper/**/*.xml
+  configuration:
+    map-underscore-to-camel-case: true   # 下划线转驼峰
+    log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
+
+# ==================== knife4j ====================
+springdoc:
+  default-flat-param-object: true      # 默认展开对象参数
+
+# ==================== 日志配置 ====================
+logging:
+  level:
+    root: INFO                             # 全局日志级别
+    com.example: DEBUG                     # 指定包日志级别（调试用）
+    sun:
+      rmi: WARN
+    javax:
+      management: WARN
+  file:
+    name: logs/${spring.application.name}.log   # 日志文件路径 [6](@ref)

@@ -1,0 +1,11 @@
+spring:
+  config:
+    activate:
+      on-profile: prod                     # 生产环境
+  datasource:
+    url: jdbc:mysql://prod-db:3306/prod_db # 生产数据库地址
+  jpa:
+    hibernate:
+      ddl-auto: validate                   # 生产环境禁用自动更新表 [3,6](@ref)
+server:
+  port: 80

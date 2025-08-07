@@ -1,4 +1,4 @@
-package com.sky.shop.config;
+package com.sky.product.config;
 
 import com.github.xiaoymin.knife4j.spring.annotations.EnableKnife4j;
 import io.swagger.v3.oas.models.OpenAPI;
@@ -14,8 +14,8 @@ public class Knife4jConfig {
     public OpenAPI openAPI() {
         return new OpenAPI()
                 .info(new Info()
-                        .title("Shop Service API")
+                        .title("Product Service API")
                         .version("1.0.0")
-                        .description("API documentation for Shop Service"));
+                        .description("API documentation for Product Service"));
     }
 }
