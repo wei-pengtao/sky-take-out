@@ -49,7 +49,7 @@
         <lombok.version>1.18.30</lombok.version>
 
         <!-- 安全组件 -->
-        <jjwt.version>0.9.1</jjwt.version>
+        <jjwt.version>0.0.1-SNAPSHOT</jjwt.version>
 
         <!-- 数据库驱动 -->
         <mysql.version>8.0.33</mysql.version>
@@ -90,9 +90,9 @@
 
             <!-- JWT认证 -->
             <dependency>
-                <groupId>io.jsonwebtoken</groupId>
-                <artifactId>jjwt</artifactId>
-                <version>${jjwt.version}</version>
+                <groupId>com.jwt.util</groupId>
+                <artifactId>jwt-util-spring-boot-starter</artifactId>
+                <version>0.0.1-SNAPSHOT</version>
             </dependency>
 
             <!-- 数据库 -->

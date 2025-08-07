@@ -1,9 +1,11 @@
 package com.sky.employee.controller;
 
 import com.sky.employee.domain.dto.EmployeeDTO;
+import com.sky.employee.domain.dto.EmployeeLoginDTO;
 import com.sky.employee.domain.dto.EmployeePageQueryDTO;
 import com.sky.employee.domain.dto.PageResultDTO;
 import com.sky.employee.domain.result.Result;
+import com.sky.employee.domain.vo.EmployeeLoginVO;
 import com.sky.employee.domain.vo.EmployeeVO;
 import com.sky.employee.service.EmployeeService;
 import io.swagger.v3.oas.annotations.Operation;
@@ -38,5 +40,12 @@ public class EmployeeController {
     public Result<PageResultDTO<EmployeeVO>> page(EmployeePageQueryDTO employeePageQueryDTO) {
         PageResultDTO<EmployeeVO> pageResult = employeeService.page(employeePageQueryDTO);
         return Result.success(pageResult);
+    }
+
+    @Operation(summary = "员工登录")
+    @PostMapping("/login")
+    public Result<EmployeeLoginVO> login(@RequestBody EmployeeLoginDTO employeeLoginDTO) {
+        EmployeeLoginVO employeeLoginVO = employeeService.login(employeeLoginDTO);
+        return Result.success(employeeLoginVO);
     }
 }

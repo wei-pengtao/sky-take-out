@@ -15,7 +15,7 @@ spring:
     username: ${database.username}         # 数据库用户名
     password: ${database.password}         # 数据库密码
     driver-class-name: com.mysql.cj.jdbc.Driver
-  
+
 # MyBatis-Plus 配置
 mybatis-plus:
   mapper-locations: classpath:mapper/**/*.xml
