@@ -1,7 +1,10 @@
 package com.sky.product.domain.dto;
 
+import com.sky.product.domain.entity.DishFlavor;
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Data;
+
+import java.util.List;
 
 @Data
 @Schema(description = "菜品数据传输对象")
@@ -26,4 +29,7 @@ public class DishDTO {
 
     @Schema(description = "菜品状态", allowableValues = {"1", "0"}, example = "1")
     private Integer status;
+
+    @Schema(description = "菜品口味列表")
+    private List<DishFlavor> flavors;
 }
