@@ -1,5 +1,6 @@
 package com.sky.product.controller;
 
+import com.sky.api.dto.DishOverViewDTO;
 import com.sky.product.domain.dto.DishDTO;
 import com.sky.product.domain.dto.DishPageQueryDTO;
 import com.sky.product.domain.dto.PageResultDTO;
@@ -72,5 +73,11 @@ public class DishController {
             @PathVariable @Schema(description = "状态", allowableValues = {"0", "1"}, example = "1") Integer status) {
         dishService.updateStatus(id, status);
         return Result.success();
+    }
+
+    @GetMapping("/overviewDishes")
+    @Operation(summary = "根据状态统计菜品数量")
+    public DishOverViewDTO overviewDishes() {
+        return dishService.overviewDishes();
     }
 }

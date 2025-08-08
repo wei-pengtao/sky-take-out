@@ -81,6 +81,12 @@
             <groupId>com.minio.oss</groupId>
             <artifactId>minio-oss-spring-boot-starter</artifactId>
         </dependency>
+
+        <dependency>
+            <groupId>com.sky</groupId>
+            <artifactId>sky-api</artifactId>
+            <version>0.0.1-SNAPSHOT</version>
+        </dependency>
     </dependencies>
 
 </project>

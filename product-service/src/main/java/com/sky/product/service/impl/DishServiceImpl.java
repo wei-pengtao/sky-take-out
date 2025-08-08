@@ -3,6 +3,7 @@ package com.sky.product.service.impl;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
+import com.sky.api.dto.DishOverViewDTO;
 import com.sky.product.domain.dto.DishDTO;
 import com.sky.product.domain.dto.DishPageQueryDTO;
 import com.sky.product.domain.dto.PageResultDTO;
@@ -150,5 +151,21 @@ public class DishServiceImpl extends ServiceImpl<DishMapper, Dish> implements Di
         }
         dish = Dish.builder().id(id).status(status).build();
         dishMapper.updateById(dish);
+    }
+
+    @Override
+    public DishOverViewDTO overviewDishes() {
+        // 统计启用状态数量
+        Long sold = dishMapper.selectCount(new LambdaQueryWrapper<Dish>()
+                .eq(Dish::getStatus, Dish.STATUS_ENABLED)); // 独立条件对象
+
+        // 统计停用状态数量
+        Long discontinued = dishMapper.selectCount(new LambdaQueryWrapper<Dish>()
+                .eq(Dish::getStatus, Dish.STATUS_DISABLED)); // 独立条件对象
+
+        return DishOverViewDTO.builder()
+                .sold(sold)
+                .discontinued(discontinued)
+                .build();
     }
 }
