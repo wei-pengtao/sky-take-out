@@ -31,7 +31,9 @@
 
     <!-- 聚合的多模块列表 -->
     <modules>
-        <module>employee-service</module>
+        <module>shop-service</module>
+        <module>product-service</module>
+        <module>sky-api</module>
     </modules>
 
     <!-- ===================== 全局属性配置 ===================== -->
@@ -57,6 +59,9 @@
         <!-- Swagger文档 -->
         <!-- 使用Knife4j增强Swagger文档 -->
         <knife4j.version>4.5.0</knife4j.version>
+
+        <!-- minio util -->
+        <minio.version>0.0.1-SNAPSHOT</minio.version>
     </properties>
 
     <!-- ===================== 依赖管理 ===================== -->
@@ -121,6 +126,13 @@
                 <groupId>com.github.xiaoymin</groupId>
                 <artifactId>knife4j-openapi3-jakarta-spring-boot-starter</artifactId>
                 <version>${knife4j.version}</version>
+            </dependency>
+
+            <!-- MinIO工具 -->
+            <dependency>
+                <groupId>com.minio.oss</groupId>
+                <artifactId>minio-oss-spring-boot-starter</artifactId>
+                <version>${minio.version}</version>
             </dependency>
         </dependencies>
     </dependencyManagement>
